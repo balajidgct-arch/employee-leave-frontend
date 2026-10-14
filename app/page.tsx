@@ -1,69 +1,174 @@
-import Image from "next/image";
+const stats = [
+  {
+    label: "Available leave",
+    value: "12 days",
+    detail: "Remaining balance",
+    color: "text-green-600",
+  },
+  {
+    label: "Pending requests",
+    value: "2",
+    detail: "Awaiting approval",
+    color: "text-amber-600",
+  },
+  {
+    label: "Approved this year",
+    value: "5",
+    detail: "Approved requests",
+    color: "text-blue-600",
+  },
+  {
+    label: "Rejected requests",
+    value: "1",
+    detail: "Rejected requests",
+    color: "text-red-600",
+  },
+];
+
+const requests = [
+  {
+    type: "Casual Leave",
+    dates: "20–21 October 2026",
+    status: "Pending",
+  },
+  {
+    type: "Sick Leave",
+    dates: "8 October 2026",
+    status: "Approved",
+  },
+  {
+    type: "Earned Leave",
+    dates: "2–4 September 2026",
+    status: "Rejected",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-slate-50 md:flex">
+      <aside className="bg-slate-900 p-6 text-white md:min-h-screen md:w-64 md:shrink-0">
+        <h1 className="text-2xl font-bold">LeaveManage</h1>
+        <p className="mt-1 text-sm text-slate-400">
+          Employee portal
+        </p>
+
+        <nav className="mt-8 space-y-2">
+          {["Dashboard", "Apply for Leave", "My Requests", "Leave Calendar"].map(
+            (item, index) => (
+              <a
+                key={item}
+                href={index === 0 ? "/" : "#"}
+                className={`block rounded-lg px-4 py-3 text-sm ${
+                  index === 0
+                    ? "bg-blue-600 text-white"
+                    : "text-slate-300 hover:bg-slate-800"
+                }`}
+              >
+                {item}
+              </a>
+            )
+          )}
+        </nav>
+
+        <div className="mt-8 border-t border-slate-700 pt-5">
+          <p className="text-xs text-slate-400">
+            Signed in as
           </p>
+          <p className="mt-1 font-medium">Demo Employee</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+      </aside>
+
+      <section className="min-w-0 flex-1 p-5 sm:p-8">
+        <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-sm text-slate-500">
+              Employee workspace
+            </p>
+            <h2 className="mt-1 text-3xl font-bold tracking-tight">
+              Dashboard
+            </h2>
+            <p className="mt-2 text-slate-500">
+              Welcome back! Here's your leave overview.
+            </p>
+          </div>
+
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#"
+            className="rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
+            + Apply for leave
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        </header>
+
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {stats.map((stat) => (
+            <article
+              key={stat.label}
+              className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+            >
+              <p className="text-sm text-slate-500">
+                {stat.label}
+              </p>
+              <p className={`mt-3 text-3xl font-bold ${stat.color}`}>
+                {stat.value}
+              </p>
+              <p className="mt-2 text-xs text-slate-400">
+                {stat.detail}
+              </p>
+            </article>
+          ))}
         </div>
-      </main>
-    </div>
+
+        <section className="mt-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 className="text-lg font-semibold">
+            Recent leave requests
+          </h3>
+
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[540px] text-left text-sm">
+              <thead className="bg-slate-50 text-slate-500">
+                <tr>
+                  <th className="p-3 font-medium">Leave type</th>
+                  <th className="p-3 font-medium">Dates</th>
+                  <th className="p-3 font-medium">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {requests.map((request) => (
+                  <tr
+                    key={request.type}
+                    className="border-t border-slate-100"
+                  >
+                    <td className="p-3 font-medium">
+                      {request.type}
+                    </td>
+                    <td className="p-3 text-slate-500">
+                      {request.dates}
+                    </td>
+                    <td className="p-3">
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${
+                          request.status === "Approved"
+                            ? "bg-green-50 text-green-700"
+                            : request.status === "Pending"
+                              ? "bg-amber-50 text-amber-700"
+                              : "bg-red-50 text-red-700"
+                        }`}
+                      >
+                        {request.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <p className="mt-6 text-xs text-slate-400">
+          Demo data only. Live Laravel API integration comes next.
+        </p>
+      </section>
+    </main>
   );
 }
